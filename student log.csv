@@ -1,0 +1,24 @@
+import csv
+
+filename = "swimming_progress.csv"
+
+
+def add_progress
+
+LilyM = {
+"full_name": "Lily McDonald",
+"age": 7,
+"level": 3,
+"skills": {
+    "freestyle kick": True,
+    "Freestyle": True,
+    "Back Torpedo": False,
+
+
+
+
+}
+
+}
+
+if "skills":

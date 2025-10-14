@@ -1,0 +1,151 @@
+import csv
+
+filename = "swimming_progress.csv"
+
+level_skills = {
+    1: ["front torpedo", "freestyle kick", "bubbles", "starfish"],
+    2: ["front torpedo", "freestyle kick", "bubbles", "starfish",
+        "bubble/bubble/breathe", "back torpedo"],
+    3: ["front torpedo", "bubbles", "starfish",
+        "bubble/bubble/breathe", "back torpedo",
+        "freestyle kick", "freestyle arms", "freestyle full",
+        "backstroke arms", "backstroke legs", "backstroke full"],
+    4: ["front torpedo", "bubbles", "starfish",
+        "bubble/bubble/breathe", "back torpedo",
+        "freestyle kick", "freestyle arms", "freestyle full",
+        "backstroke arms", "backstroke legs", "backstroke full",
+        "breaststroke kick"],
+    5: ["front torpedo", "bubbles", "starfish",
+        "bubble/bubble/breathe", "back torpedo",
+        "freestyle kick", "freestyle arms", "freestyle full",
+        "backstroke arms", "backstroke legs", "backstroke full",
+        "breaststroke kick","breaststroke arms","breaststroke full", "dolphin kick"]
+}
+
+students = [
+    {
+        "full_name": "Lily McDonald",
+        "age": 7,
+        "level": 3,
+        "skills": {
+            "freestyle kick": True,
+            "freestyle arms": True,
+            "freestyle full": True,
+            "backstroke arms": False,
+            "backstroke legs": False,
+            "backstroke full": False,
+            "front torpedo": True,
+            "bubbles": True,
+            "starfish": True,
+            "bubble/bubble/breathe": True,
+            "back torpedo": False
+        }
+    },
+    {
+        "full_name": "Ellie Kerr",
+        "age": 9,
+        "level": 5,
+        "skills": {
+            "freestyle kick": True,
+            "freestyle arms": True,
+            "freestyle full": True,
+            "backstroke arms": True,
+            "backstroke legs": True,
+            "backstroke full": True,
+            "front torpedo": True,
+            "bubbles": True,
+            "starfish": True,
+            "bubble/bubble/breathe": True,
+            "back torpedo": False,
+            "breaststroke kick": True,
+            "breaststroke arms": False,
+            "breaststroke full": False,
+            "dolphin kick": False
+        }
+    },
+    {
+        "full_name": "Stan Thomas",
+        "age": 4,
+        "level": 2,
+        "skills": {
+            "freestyle kick": True,
+            "freestyle arms": False,
+            "front torpedo": False,
+            "bubbles": True,
+            "starfish": False,
+            "bubble/bubble/breathe": False,
+            "back torpedo": False
+        }
+    },
+    {
+        "full_name": "Sebastian Smith",
+        "age": 8,
+        "level": 4,
+        "skills": {
+            "freestyle kick": True,
+            "freestyle arms": True,
+            "freestyle full": True,
+            "backstroke arms": True,
+            "backstroke legs": True,
+            "backstroke full": True,
+            "breaststroke kick": False,
+            "front torpedo": True,
+            "bubbles": True,
+            "starfish": True,
+            "bubble/bubble/breathe": True,
+            "back torpedo": True
+        }
+    },
+    {
+        "full_name": "Christian Peters",
+        "age": 4,
+        "level": 1,
+        "skills": {
+            "freestyle kick": True,
+            "front torpedo": False, 
+            "bubbles": True,
+            "starfish": True, 
+        }
+
+    }
+]
+
+
+
+def save_progress(students_list):
+    all_skills = set()
+    for student in students_list:
+        all_skills.update(student["skills"].keys())
+    headers = ["full_name", "age", "level"] + sorted(all_skills)
+
+    with open(filename, mode="w", newline="") as file:
+        writer = csv.DictWriter(file, fieldnames=headers)
+        writer.writeheader()
+        for student in students_list:
+            row = {"full_name": student["full_name"],
+                   "age": student["age"],
+                   "level": student["level"]}
+            row.update(student["skills"])
+            writer.writerow(row)
+
+def add_student(full_name, age, level, skills_dict):
+    # make sure all skills for that level are in the dictionary
+    for skill in level_skills[level]:
+        if skill not in skills_dict:
+            skills_dict[skill] = False  # default to False
+    students.append({
+        "full_name": full_name,
+        "age": age,
+        "level": level,
+        "skills": skills_dict
+    })
+
+
+
+save_progress(students)
+
+print(f"Progress saved to {filename}!")
+
+
+
+add_student("Calvin Lee", 7, 3, {"freestyle kick": True, "bubbles": True, "front torpedo": True, "starfish": True, "freestyle arms": True, "freestyle full": True, })
